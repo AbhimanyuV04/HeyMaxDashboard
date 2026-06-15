@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useBilling } from '../context/BillingContext';
+import { PARTNERS } from '../types';
 import type { InvoiceStatus } from '../types';
 import TaxInvoicePreview from './TaxInvoicePreview';
 import BulkInvoiceActions from './BulkInvoiceActions';
@@ -26,10 +27,16 @@ interface InvoiceWorkspaceProps {
 export default function InvoiceWorkspace({ statusFilter, onStatusFilterChange }: InvoiceWorkspaceProps) {
   const { invoices, isLoading } = useBilling();
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const [partnerFilter, setpartnerFilter] = useState<string>('');
 
   const filteredInvoices = useMemo(
-    () => (statusFilter === 'All' ? invoices : invoices.filter((inv) => inv.status === statusFilter)),
-    [invoices, statusFilter]
+    () =>
+      invoices.filter(
+        (inv) =>
+          (statusFilter === 'All' || inv.status === statusFilter) &&
+          (partnerFilter === '' || String(inv.partner_id) === partnerFilter)
+      ),
+    [invoices, statusFilter, partnerFilter]
   );
 
   const payableVisible = useMemo(
@@ -92,6 +99,25 @@ export default function InvoiceWorkspace({ statusFilter, onStatusFilterChange }:
               {tab}
             </button>
           ))}
+        </div>
+
+        <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2">
+          <label className="flex items-center gap-2 text-xs font-medium text-slate-500">
+            Partner
+            <select
+              aria-label="Filter invoices by Partner"
+              className="rounded-lg border border-slate-300 px-2 py-1 text-xs text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              value={partnerFilter}
+              onChange={(e) => setpartnerFilter(e.target.value)}
+            >
+              <option value="">All</option>
+              {PARTNERS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.name}
+                </option>
+              ))}
+            </select>
+          </label>
         </div>
 
         <div className="flex items-center justify-between border-b border-slate-200 px-4 py-2">
