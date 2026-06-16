@@ -1,3 +1,13 @@
 node_modules/
 .env
 npm-debug.log*
+
+# Backend files — kept locally, not tracked in git
+server.js
+db.js
+seed.js
+schema.sql
+package.json
+package-lock.json
+.env.example
+src/
