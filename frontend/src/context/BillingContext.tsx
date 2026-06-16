@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
-import { getBookings, getInvoices, getMetrics } from '../services/api';
+import { getBookings, getInvoices, getMetrics, initLocalStorage } from '../services/api';
 import type { BookingFilters } from '../services/api';
 import type { Booking, InvoiceWithPartner, Metrics } from '../types';
 
@@ -24,6 +24,11 @@ export function BillingProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filters, setFilters] = useState<BookingFilters>({});
+
+  // Seed localStorage with demo data the very first time the app loads.
+  useEffect(() => {
+    initLocalStorage();
+  }, []);
 
   const refreshData = useCallback(async () => {
     setIsLoading(true);
