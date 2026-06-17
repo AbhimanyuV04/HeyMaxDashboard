@@ -156,7 +156,7 @@ export default function TaxInvoicePreview({ invoice }: TaxInvoicePreviewProps) {
             </thead>
             <tbody>
               <tr className="border-b border-slate-100">
-                <td className="py-3 text-slate-700">Affiliate Referral Booking Commission (Stayed &amp; Verified)</td>
+                <td className="py-3 text-slate-700">Affiliate Referral Booking Commission (Fulfilled &amp; Verified)</td>
                 <td className="py-3 text-right text-slate-700">{quantity}</td>
                 <td className="py-3 text-right text-slate-700">{formatCurrency(UNIT_PRICE_SGD)}</td>
                 <td className="py-3 text-right text-slate-700">{formatCurrency(invoice.subtotal_sgd)}</td>

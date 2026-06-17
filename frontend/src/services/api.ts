@@ -19,9 +19,10 @@ const PARTNER_META: Record<number, { name: string; contact_email: string; uen: s
   1: { name: 'Agoda', contact_email: 'finance@agoda.com', uen: '201001234A' },
   2: { name: 'Booking.com', contact_email: 'billing@booking.com', uen: '201198765B' },
   3: { name: 'Expedia', contact_email: 'ap@expedia.com', uen: '201245678C' },
+  4: { name: 'Trip.com', contact_email: 'finance@trip.com', uen: '201301234D' },
 };
 
-const PREFIX_MAP: Record<number, string> = { 1: 'AGD', 2: 'BDC', 3: 'EXP' };
+const PREFIX_MAP: Record<number, string> = { 1: 'AGD', 2: 'BDC', 3: 'EXP', 4: 'TRP' };
 
 const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 400));
 
@@ -88,14 +89,14 @@ function makeInvoice(
 
 function createSeedData(): { bookings: Booking[]; invoices: InvoiceWithPartner[] } {
   const bookings: Booking[] = [
-    // Agoda — 7 stayed, 4 pending, 2 cancelled
-    makeBooking('AGD-100001', 1, 'Stayed', 'Uninvoiced', 2, -6, -5),
-    makeBooking('AGD-100002', 1, 'Stayed', 'Uninvoiced', 1, -11, -10),
-    makeBooking('AGD-100003', 1, 'Stayed', 'Uninvoiced', 3, -16, -15),
-    makeBooking('AGD-100004', 1, 'Stayed', 'Invoiced',   2, -21, -20, 1),
-    makeBooking('AGD-100005', 1, 'Stayed', 'Invoiced',   1, -26, -25, 1),
-    makeBooking('AGD-100006', 1, 'Stayed', 'Paid',       2, -61, -60, 4),
-    makeBooking('AGD-100007', 1, 'Stayed', 'Paid',       3, -66, -65, 4),
+    // Agoda — 7 fulfilled, 4 pending, 2 cancelled
+    makeBooking('AGD-100001', 1, 'Fulfilled', 'Uninvoiced', 2, -6, -5),
+    makeBooking('AGD-100002', 1, 'Fulfilled', 'Uninvoiced', 1, -11, -10),
+    makeBooking('AGD-100003', 1, 'Fulfilled', 'Uninvoiced', 3, -16, -15),
+    makeBooking('AGD-100004', 1, 'Fulfilled', 'Invoiced',   2, -21, -20, 1),
+    makeBooking('AGD-100005', 1, 'Fulfilled', 'Invoiced',   1, -26, -25, 1),
+    makeBooking('AGD-100006', 1, 'Fulfilled', 'Paid',       2, -61, -60, 4),
+    makeBooking('AGD-100007', 1, 'Fulfilled', 'Paid',       3, -66, -65, 4),
     makeBooking('AGD-100008', 1, 'Pending', 'Uninvoiced', 2,  5,  6),
     makeBooking('AGD-100009', 1, 'Pending', 'Uninvoiced', 1, 10, 11),
     makeBooking('AGD-100010', 1, 'Pending', 'Uninvoiced', 2, 20, 21),
@@ -103,13 +104,13 @@ function createSeedData(): { bookings: Booking[]; invoices: InvoiceWithPartner[]
     makeBooking('AGD-100012', 1, 'Cancelled', 'Uninvoiced', 2, -31, -30),
     makeBooking('AGD-100013', 1, 'Cancelled', 'Uninvoiced', 1, -46, -45),
     // Booking.com
-    makeBooking('BDC-100001', 2, 'Stayed', 'Uninvoiced', 2,  -8,  -7),
-    makeBooking('BDC-100002', 2, 'Stayed', 'Uninvoiced', 1, -13, -12),
-    makeBooking('BDC-100003', 2, 'Stayed', 'Uninvoiced', 3, -19, -18),
-    makeBooking('BDC-100004', 2, 'Stayed', 'Invoiced',   2, -23, -22, 2),
-    makeBooking('BDC-100005', 2, 'Stayed', 'Invoiced',   2, -29, -28, 2),
-    makeBooking('BDC-100006', 2, 'Stayed', 'Paid',       1, -56, -55, 5),
-    makeBooking('BDC-100007', 2, 'Stayed', 'Paid',       4, -71, -70, 5),
+    makeBooking('BDC-100001', 2, 'Fulfilled', 'Uninvoiced', 2,  -8,  -7),
+    makeBooking('BDC-100002', 2, 'Fulfilled', 'Uninvoiced', 1, -13, -12),
+    makeBooking('BDC-100003', 2, 'Fulfilled', 'Uninvoiced', 3, -19, -18),
+    makeBooking('BDC-100004', 2, 'Fulfilled', 'Invoiced',   2, -23, -22, 2),
+    makeBooking('BDC-100005', 2, 'Fulfilled', 'Invoiced',   2, -29, -28, 2),
+    makeBooking('BDC-100006', 2, 'Fulfilled', 'Paid',       1, -56, -55, 5),
+    makeBooking('BDC-100007', 2, 'Fulfilled', 'Paid',       4, -71, -70, 5),
     makeBooking('BDC-100008', 2, 'Pending', 'Uninvoiced', 2,  3,  5),
     makeBooking('BDC-100009', 2, 'Pending', 'Uninvoiced', 1,  8, 10),
     makeBooking('BDC-100010', 2, 'Pending', 'Uninvoiced', 3, 15, 17),
@@ -117,28 +118,44 @@ function createSeedData(): { bookings: Booking[]; invoices: InvoiceWithPartner[]
     makeBooking('BDC-100012', 2, 'Cancelled', 'Uninvoiced', 2, -36, -35),
     makeBooking('BDC-100013', 2, 'Cancelled', 'Uninvoiced', 1, -51, -50),
     // Expedia
-    makeBooking('EXP-100001', 3, 'Stayed', 'Uninvoiced', 3,  -7,  -6),
-    makeBooking('EXP-100002', 3, 'Stayed', 'Uninvoiced', 2, -15, -14),
-    makeBooking('EXP-100003', 3, 'Stayed', 'Uninvoiced', 1, -18, -17),
-    makeBooking('EXP-100004', 3, 'Stayed', 'Invoiced',   3, -24, -23, 3),
-    makeBooking('EXP-100005', 3, 'Stayed', 'Invoiced',   1, -28, -27, 3),
-    makeBooking('EXP-100006', 3, 'Stayed', 'Paid',       2, -59, -58, 6),
-    makeBooking('EXP-100007', 3, 'Stayed', 'Paid',       2, -63, -62, 6),
+    makeBooking('EXP-100001', 3, 'Fulfilled', 'Uninvoiced', 3,  -7,  -6),
+    makeBooking('EXP-100002', 3, 'Fulfilled', 'Uninvoiced', 2, -15, -14),
+    makeBooking('EXP-100003', 3, 'Fulfilled', 'Uninvoiced', 1, -18, -17),
+    makeBooking('EXP-100004', 3, 'Fulfilled', 'Invoiced',   3, -24, -23, 3),
+    makeBooking('EXP-100005', 3, 'Fulfilled', 'Invoiced',   1, -28, -27, 3),
+    makeBooking('EXP-100006', 3, 'Fulfilled', 'Paid',       2, -59, -58, 6),
+    makeBooking('EXP-100007', 3, 'Fulfilled', 'Paid',       2, -63, -62, 6),
     makeBooking('EXP-100008', 3, 'Pending', 'Uninvoiced', 1,  4,  6),
     makeBooking('EXP-100009', 3, 'Pending', 'Uninvoiced', 2, 12, 14),
     makeBooking('EXP-100010', 3, 'Pending', 'Uninvoiced', 3, 18, 20),
     makeBooking('EXP-100011', 3, 'Pending', 'Uninvoiced', 1, 28, 30),
     makeBooking('EXP-100012', 3, 'Cancelled', 'Uninvoiced', 3, -41, -40),
     makeBooking('EXP-100013', 3, 'Cancelled', 'Uninvoiced', 2, -49, -48),
+    // Trip.com
+    makeBooking('TRP-100001', 4, 'Fulfilled', 'Uninvoiced', 2,  -7,  -6),
+    makeBooking('TRP-100002', 4, 'Fulfilled', 'Uninvoiced', 1, -12, -11),
+    makeBooking('TRP-100003', 4, 'Fulfilled', 'Uninvoiced', 3, -17, -16),
+    makeBooking('TRP-100004', 4, 'Fulfilled', 'Invoiced',   2, -22, -21, 7),
+    makeBooking('TRP-100005', 4, 'Fulfilled', 'Invoiced',   1, -27, -26, 7),
+    makeBooking('TRP-100006', 4, 'Fulfilled', 'Paid',       2, -62, -61, 8),
+    makeBooking('TRP-100007', 4, 'Fulfilled', 'Paid',       3, -67, -66, 8),
+    makeBooking('TRP-100008', 4, 'Pending', 'Uninvoiced', 2,  6,  7),
+    makeBooking('TRP-100009', 4, 'Pending', 'Uninvoiced', 1, 11, 12),
+    makeBooking('TRP-100010', 4, 'Pending', 'Uninvoiced', 2, 21, 22),
+    makeBooking('TRP-100011', 4, 'Pending', 'Uninvoiced', 1, 31, 32),
+    makeBooking('TRP-100012', 4, 'Cancelled', 'Uninvoiced', 2, -32, -31),
+    makeBooking('TRP-100013', 4, 'Cancelled', 'Uninvoiced', 1, -47, -46),
   ];
 
-  // Invoices: 1-3 Sent, 4-6 Paid (one per partner each)
+  // Invoices: 1-3 Sent, 4-6 Paid, 7-8 Trip.com (Sent, Paid)
   // Invoice 1: Agoda Sent — AGD-100004 (qty:2→1.00) + AGD-100005 (qty:1→0.50) = subtotal 1.50
   // Invoice 2: BDC Sent   — BDC-100004 (qty:2→1.00) + BDC-100005 (qty:2→1.00) = subtotal 2.00
   // Invoice 3: EXP Sent   — EXP-100004 (qty:3→1.50) + EXP-100005 (qty:1→0.50) = subtotal 2.00
   // Invoice 4: Agoda Paid — AGD-100006 (qty:2→1.00) + AGD-100007 (qty:3→1.50) = subtotal 2.50
   // Invoice 5: BDC Paid   — BDC-100006 (qty:1→0.50) + BDC-100007 (qty:4→2.00) = subtotal 2.50
   // Invoice 6: EXP Paid   — EXP-100006 (qty:2→1.00) + EXP-100007 (qty:2→1.00) = subtotal 2.00
+  // Invoice 7: TRP Sent   — TRP-100004 (qty:2→1.00) + TRP-100005 (qty:1→0.50) = subtotal 1.50
+  // Invoice 8: TRP Paid   — TRP-100006 (qty:2→1.00) + TRP-100007 (qty:3→1.50) = subtotal 2.50
   const invoices: InvoiceWithPartner[] = [
     makeInvoice(1, 'HMAX-2026-001', 1, 1.50, 'Sent', -20),
     makeInvoice(2, 'HMAX-2026-002', 2, 2.00, 'Sent', -22),
@@ -146,6 +163,8 @@ function createSeedData(): { bookings: Booking[]; invoices: InvoiceWithPartner[]
     makeInvoice(4, 'HMAX-2026-004', 1, 2.50, 'Paid', -55),
     makeInvoice(5, 'HMAX-2026-005', 2, 2.50, 'Paid', -60),
     makeInvoice(6, 'HMAX-2026-006', 3, 2.00, 'Paid', -62),
+    makeInvoice(7, 'HMAX-2026-007', 4, 1.50, 'Sent', -21),
+    makeInvoice(8, 'HMAX-2026-008', 4, 2.50, 'Paid', -61),
   ];
 
   return { bookings, invoices };
@@ -194,11 +213,11 @@ export async function getMetrics(): Promise<Metrics> {
   const invoices = readInvoices();
 
   const total_accrued_pipeline = bookings
-    .filter((b) => b.booking_status === 'Stayed')
+    .filter((b) => b.booking_status === 'Fulfilled')
     .reduce((sum, b) => sum + Number(b.line_total_sgd), 0);
 
   const ready_to_invoice = bookings
-    .filter((b) => b.booking_status === 'Stayed' && b.billing_status === 'Uninvoiced')
+    .filter((b) => b.booking_status === 'Fulfilled' && b.billing_status === 'Uninvoiced')
     .reduce((sum, b) => sum + Number(b.line_total_sgd), 0);
 
   const total_collected = invoices
@@ -377,7 +396,7 @@ export async function uploadBookingsCsv(
       quantity,
       rate_sgd: RATE_SGD.toFixed(2),
       line_total_sgd: (quantity * RATE_SGD).toFixed(2),
-      booking_status: isPast ? 'Stayed' : 'Pending',
+      booking_status: isPast ? 'Fulfilled' : 'Pending',
       billing_status: 'Uninvoiced',
       invoice_id: null,
       created_at: new Date().toISOString(),

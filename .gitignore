@@ -10,4 +10,4 @@ schema.sql
 package.json
 package-lock.json
 .env.example
-src/
+/src/

@@ -95,7 +95,7 @@ export default function BatchActionsDrawer({ selectedBookings, onClear }: BatchA
             ) : (
               <p className="text-sm font-medium text-slate-700">
                 Generate Draft Invoice for <span className="font-semibold">{partnerName}</span> (
-                {selectedBookings.length} {selectedBookings.length === 1 ? 'Stay' : 'Stays'} Selected) — Total:{' '}
+                {selectedBookings.length} {selectedBookings.length === 1 ? 'Booking' : 'Bookings'} Selected) — Total:{' '}
                 <span className="font-semibold">{formatCurrency(subtotal)}</span>
               </p>
             )}

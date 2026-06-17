@@ -1,6 +1,6 @@
 # HeyMax Billing & Reconciliation Dashboard
 
-A B2B reconciliation and invoicing dashboard for HeyMax's OTA/channel partners (Agoda, Booking.com, Expedia). Tracks bookings, generates draft invoices, and reconciles payments — with support for bulk CSV/XLSX ingestion and flexible column mapping.
+A B2B reconciliation and invoicing dashboard for HeyMax's affiliate booking partners (Agoda, Booking.com, Expedia, Trip.com). Tracks bookings, generates draft invoices, and reconciles payments — with support for bulk CSV/XLSX ingestion and flexible column mapping.
 
 **Stack:**
 - **Frontend:** React + TypeScript + Vite + Tailwind CSS
@@ -19,18 +19,18 @@ npm run dev
 
 Open **http://localhost:5173**. That's it — no backend, no database, no `.env` file needed.
 
-Sample data (39 bookings, 6 invoices across all 3 partners) is seeded into `localStorage` automatically on first load.
+Sample data (52 bookings, 8 invoices across all 4 partners) is seeded into `localStorage` automatically on first load.
 
 ---
 
 ## Using the dashboard
 
-- **Bookings Ledger** — view and filter bookings by Partner, Stay Status, and Billing Status.
+- **Bookings Ledger** — view and filter bookings by Partner, Booking Status, and Billing Status.
 - **Import Bookings** — click "Import Bookings" to launch the mapping wizard:
   1. Upload a `.csv` or `.xlsx` file and select the source Partner.
   2. Review the auto-matched column mapping (Booking ID, Booking Date, Check-in/Check-out Date, Quantity).
   3. Confirm and execute — rows are parsed client-side and appended to local state.
-- **Generate Draft Invoice** — select eligible rows (Stayed + Uninvoiced) and generate a draft invoice per partner.
+- **Generate Draft Invoice** — select eligible rows (Fulfilled + Uninvoiced) and generate a draft invoice per partner.
 - **Invoices Hub** — filter by Partner or status tab; mark invoices as paid individually or in bulk.
 
 ---

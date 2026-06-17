@@ -19,7 +19,7 @@ function App() {
 
   function handleReadyToInvoiceClick() {
     setView('bookings');
-    setFilters({ ...filters, booking_status: 'Stayed', billing_status: 'Uninvoiced' });
+    setFilters({ ...filters, booking_status: 'Fulfilled', billing_status: 'Uninvoiced' });
   }
 
   function handleTotalCollectedClick() {

@@ -78,7 +78,7 @@ export default function MetricsRibbon({ onReadyToInvoiceClick, onTotalCollectedC
       <MetricCard
         label="Ready to Invoice"
         value={metrics?.ready_to_invoice}
-        description="Stayed & uninvoiced — action required"
+        description="Fulfilled & uninvoiced — action required"
         accent="action"
         isLoading={isLoading}
         onClick={onReadyToInvoiceClick}

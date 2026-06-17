@@ -1,4 +1,4 @@
-export type BookingStatus = 'Pending' | 'Stayed' | 'Cancelled';
+export type BookingStatus = 'Pending' | 'Fulfilled' | 'Cancelled';
 export type BillingStatus = 'Uninvoiced' | 'Invoiced' | 'Paid';
 export type InvoiceStatus = 'Draft' | 'Sent' | 'Paid';
 
@@ -53,6 +53,7 @@ export const PARTNERS: Partner[] = [
   { id: '1', name: 'Agoda' },
   { id: '2', name: 'Booking.com' },
   { id: '3', name: 'Expedia' },
+  { id: '4', name: 'Trip.com' },
 ];
 
 // Mock corporate addresses for the Tax Invoice preview (not stored in the DB schema).
@@ -60,4 +61,5 @@ export const PARTNER_ADDRESSES: Record<number, string> = {
   1: '10 Pasir Panjang Road, #10-01 Mapletree Business City, Singapore 117438',
   2: '5 Temasek Boulevard, #12-01 Suntec Tower 5, Singapore 038985',
   3: '1 Raffles Quay, #20-02 North Tower, Singapore 048583',
+  4: '1 Wallich Street, #37-01 Guoco Tower, Singapore 078881',
 };
