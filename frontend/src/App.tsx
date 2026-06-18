@@ -1,15 +1,19 @@
 import { useState } from 'react';
 import MetricsRibbon from './components/MetricsRibbon';
+import RevenueTrendMini from './components/RevenueTrendMini';
+import RevenueByPartnerMini from './components/RevenueByPartnerMini';
 import BookingLedgerTable from './components/BookingLedgerTable';
 import InvoiceWorkspace from './components/InvoiceWorkspace';
+import AnalyticsCharts from './components/AnalyticsCharts';
 import type { InvoiceStatusFilter } from './components/InvoiceWorkspace';
 import { useBilling } from './context/BillingContext';
 
-type View = 'bookings' | 'invoices';
+type View = 'bookings' | 'invoices' | 'analytics';
 
 const NAV_TABS: { id: View; label: string }[] = [
   { id: 'bookings', label: 'Bookings Ledger' },
   { id: 'invoices', label: 'Invoices Hub' },
+  { id: 'analytics', label: 'Analytics' },
 ];
 
 function App() {
@@ -60,11 +64,15 @@ function App() {
           onReadyToInvoiceClick={handleReadyToInvoiceClick}
           onTotalCollectedClick={handleTotalCollectedClick}
         />
-        {view === 'bookings' ? (
-          <BookingLedgerTable />
-        ) : (
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <RevenueTrendMini />
+          <RevenueByPartnerMini />
+        </div>
+        {view === 'bookings' && <BookingLedgerTable />}
+        {view === 'invoices' && (
           <InvoiceWorkspace statusFilter={invoiceStatusFilter} onStatusFilterChange={setInvoiceStatusFilter} />
         )}
+        {view === 'analytics' && <AnalyticsCharts />}
       </main>
     </div>
   );
